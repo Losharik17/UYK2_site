@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
+  <script defer src="{{ url_for('static', filename='themes.js') }}"></script>
+  <script src="https://kit.fontawesome.com/640fea3c58.js" crossorigin="anonymous"></script>
+  <script defer src="{{ url_for('static', filename='plugins/jquery-3.6.0.min.js') }}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/ScrollTrigger.min.js"></script>
+  {#
+  <script defer src="https://ajax.googleapis.com/ajax/libs/hammerjs/2.0.8/hammer.min.js"></script>#}
+  <script src="{{ url_for('static', filename='plugins/mobile-detect.min.js') }}"></script>
+
+  {% block links %}{% endblock %}
+
+  {% if title %}
+  <title>{{ title }}</title>
+  {% else %}
+  <title>UYK2</title>
+  {% endif %}
+</head>
+
+<body>
+111
+</body>
+
+</html>
