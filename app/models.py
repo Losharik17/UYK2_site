@@ -1,10 +1,4 @@
 import os
-import datetime as dt
-from enum import unique
-from time import time
-from flask import current_app
-from sqlalchemy import event, DDL
-from flask_sqlalchemy import BaseQuery
 from app import db
 # from flask_login import UserMixin, login_required
 # from app import login, admin
@@ -65,6 +59,7 @@ class News(db.Model, ImageFunctions):
     date = db.Column(db.Date)
     link = db.Column(db.String(4095))
     author = db.Column(db.String(128))
+
 
 class Event(db.Model, ImageFunctions):
     PATH = 'app/static/images/events/'
