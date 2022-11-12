@@ -4,16 +4,6 @@
 /venv
 /migrations
 /logs
-test.*
 *.log
-app/static/images/staff/62qSoHtrcNM.jpg
-app/static/images/staff/загружено.jfif
-/.university/
-.xml
 *.zip
-tpark1/
-/node_modules
-testFile.txt
-package.json
-package-lock.json
 /uyk2-venv/

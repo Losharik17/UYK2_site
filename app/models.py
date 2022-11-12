@@ -60,19 +60,19 @@ class News(db.Model, ImageFunctions):
     PATH = 'app/static/images/news/'
 
     id = db.Column(db.Integer, primary_key=True, index=True)
-    title = db.Column(db.String(255))
+    title = db.Column(db.String(256))
     text = db.Column(db.Text)
     date = db.Column(db.Date)
     link = db.Column(db.String(4095))
-
+    author = db.Column(db.String(128))
 
 class Event(db.Model, ImageFunctions):
     PATH = 'app/static/images/events/'
 
     id = db.Column(db.Integer, primary_key=True, index=True)
-    title = db.Column(db.String(255))
+    title = db.Column(db.String(256))
     text = db.Column(db.Text)
     start_date = db.Column(db.Date)
     end_date = db.Column(db.Date)
-    address = db.Column(db.String(255))
-    link = db.Column(db.String(4095))
+    address = db.Column(db.String(256))
+    link = db.Column(db.String(4096))
