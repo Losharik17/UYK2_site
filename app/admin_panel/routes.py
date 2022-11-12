@@ -10,7 +10,7 @@ from sqlalchemy import create_engine
 from flask_ckeditor import CKEditor
 import shutil
 from flask_admin.contrib.fileadmin import FileAdmin
-
+from flask import Admin
 admin.add_view(FileAdmin('app/static/', name='Static Files'))
 admin.add_view(AdministratorView(Administrator, db.session))
 
