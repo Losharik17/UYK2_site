@@ -3,10 +3,10 @@ from flask import render_template, flash, redirect, url_for, request, jsonify, c
 # from flask_principal import Principal, Permission, RoleNeed, Identity, identity_changed, identity_loaded, \
 #     AnonymousIdentity, ActionNeed
 from app.main import bp
-from app import db, login, principal
+# from app import db, login, principal
 import os, datetime, time
 from sqlalchemy import create_engine
-from app.models import Administrator
+# from app.models import Administrator
 from flask_ckeditor import CKEditor
 import shutil
 from werkzeug.urls import url_parse

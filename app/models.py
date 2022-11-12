@@ -1,5 +1,5 @@
 import os
-from datetime import datetime
+import datetime as dt
 from enum import unique
 from time import time
 from flask import current_app
@@ -10,6 +10,7 @@ from app import db
 # from app import login, admin
 from flask_admin import BaseView, expose, AdminIndexView
 from flask_admin.contrib.sqla import ModelView
+
 
 # class Administrator(UserMixin, db.Model):
 #     id = db.Column(db.Integer, primary_key=True, index=True, unique=True)
@@ -30,12 +31,22 @@ from flask_admin.contrib.sqla import ModelView
 #     can_delete = False
 #     can_create = False
 #     column_exclude_list = ['password']
+class ImageFunctions:
+    def save_img(self, img):
+        """Сохраняет изображение"""
+        path = os.path.join(self.PATH, f'{self.id}.jpg')
+        img.save(path)
 
+    def delete_img(self):
+        """Удаляет изображение"""
+        path = os.path.join(self.PATH, f'{self.id}.jpg')
+        if os.path.isfile(path):
+            os.remove(path)
 
-class News(db.Model):
-    PATH = 'app/static/images/news/'
-    id = db.Column(db.Integer, primary_key=True, index=True)
-    title = db.Column(db.String(255))
+    def change_img(self, img):
+        """Изменяет изображение"""
+        self.save_img(img)
+
     @property
     def img_url(self):
         """Возвращает url для изображения"""
@@ -43,17 +54,25 @@ class News(db.Model):
         if os.path.isfile(path):
             return f'{self.PATH[:3]}{self.id}.jpg'
         return f'{self.PATH[:3]}0.jpg'  # стандартное фот
-    def save_img(self, img):
-        """Сохраняет фото для новости"""
-        path = os.path.join(self.PATH, f'{self.id}.jpg')
-        img.save(path)
-    def delete_img(self):
-        """Удаляет фото для новости"""
-        path = os.path.join(self.PATH, f'{self.id}.jpg')
-        if os.path.isfile(path):
-            os.remove(path)
-    def change_img(self, img):
-        """Изменяет фото для новости"""
-        self.save_img(img)
-        # path = os.path.join(self.PATH, f'{self.id}.jpg')
-        # img.save(path)
+
+
+class News(db.Model, ImageFunctions):
+    PATH = 'app/static/images/news/'
+
+    id = db.Column(db.Integer, primary_key=True, index=True)
+    title = db.Column(db.String(255))
+    text = db.Column(db.Text)
+    date = db.Column(db.Date)
+    link = db.Column(db.String(4095))
+
+
+class Event(db.Model, ImageFunctions):
+    PATH = 'app/static/images/events/'
+
+    id = db.Column(db.Integer, primary_key=True, index=True)
+    title = db.Column(db.String(255))
+    text = db.Column(db.Text)
+    start_date = db.Column(db.Date)
+    end_date = db.Column(db.Date)
+    address = db.Column(db.String(255))
+    link = db.Column(db.String(4095))

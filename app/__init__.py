@@ -91,4 +91,4 @@ def create_app(config_class=Config):
 
 
 from app import models
-from app.admin_panel.routes import MyView
+# from app.admin_panel.routes import MyView
