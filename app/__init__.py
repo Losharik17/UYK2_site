@@ -1,29 +1,26 @@
 import logging
 from logging.handlers import SMTPHandler, RotatingFileHandler
 import os
-
-import flask_admin
-from flask import Flask, request, current_app
+from flask import Flask
 from flask_json import FlaskJSON
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-# from flask_mail import Mail
+
 # from flask_moment import Moment
 from config import Config
 # from flask_login import LoginManager, login_required
 from flask_ckeditor import CKEditor
-# from flask_principal import Principal
 from flask_admin import Admin
+from flask_babelex import Babel as BabelEx
 
 db = SQLAlchemy()
 migrate = Migrate()
-# mail = Mail()
 # moment = Moment()
 json = FlaskJSON()
 ckeditor = CKEditor()
 # login = LoginManager()
-# principal = Principal()
-admin = Admin(name='Сайт Кафедры', template_mode='bootstrap3')
+babel_ex = BabelEx()
+admin = Admin(name='Сайт Кафедры', template_mode='bootstrap4', url='/admin_panel')
 # login.login_view = 'auth.login'
 # login.login_message = 'Пожалуйста, авторизуйтесь для доступа к данной странице.'
 # login.login_message_category = 'warning'
@@ -37,12 +34,12 @@ def create_app(config_class=Config):
     app.config.from_object(config_class)
     db.init_app(app)
     migrate.init_app(app, db, render_as_batch=True)
-    # mail.init_app(app)
     # moment.init_app(app)
     json.init_app(app)
     ckeditor.init_app(app)
     # login.init_app(app)
-    # principal.init_app(app)
+    # admin.init_app(app)
+    babel_ex.init_app(app)
     admin.init_app(app)
 
     from app.errors import bp as errors_bp
@@ -57,22 +54,23 @@ def create_app(config_class=Config):
     from app.auth import bp as auth_bp
     app.register_blueprint(auth_bp, url_prefix='/auth')
 
+
     if not app.debug and not app.testing:
-        if app.config['MAIL_SERVER']:
-            auth = None
-            if app.config['MAIL_USERNAME'] or app.config['MAIL_PASSWORD']:
-                auth = (app.config['MAIL_USERNAME'],
-                        app.config['MAIL_PASSWORD'])
-            secure = None
-            if app.config['MAIL_USE_TLS']:
-                secure = ()
-            mail_handler = SMTPHandler(
-                mailhost=(app.config['MAIL_SERVER'], app.config['MAIL_PORT']),
-                fromaddr='no-reply@' + app.config['MAIL_SERVER'],
-                toaddrs=app.config['ADMINS'], subject='NSPT Rating Failure',
-                credentials=auth, secure=secure)
-            mail_handler.setLevel(logging.ERROR)
-            app.logger.addHandler(mail_handler)
+        # if app.config['MAIL_SERVER']:
+        #     auth = None
+        #     if app.config['MAIL_USERNAME'] or app.config['MAIL_PASSWORD']:
+        #         auth = (app.config['MAIL_USERNAME'],
+        #                 app.config['MAIL_PASSWORD'])
+        #     secure = None
+        #     if app.config['MAIL_USE_TLS']:
+        #         secure = ()
+        #     mail_handler = SMTPHandler(
+        #         mailhost=(app.config['MAIL_SERVER'], app.config['MAIL_PORT']),
+        #         fromaddr='no-reply@' + app.config['MAIL_SERVER'],
+        #         toaddrs=app.config['ADMINS'], subject='NSPT Rating Failure',
+        #         credentials=auth, secure=secure)
+        #     mail_handler.setLevel(logging.ERROR)
+        #     app.logger.addHandler(mail_handler)
 
         if not os.path.exists('logs'):
             os.mkdir('logs')

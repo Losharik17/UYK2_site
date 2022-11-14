@@ -20,11 +20,7 @@ from flask_admin.contrib.sqla import ModelView
 # def load_user(id):
 #     return Administrator.query.get(int(id))
 #
-# class AdministratorView(ModelView):
-#     can_edit = False
-#     can_delete = False
-#     can_create = False
-#     column_exclude_list = ['password']
+#
 class ImageFunctions:
     def save_img(self, img):
         """Сохраняет изображение"""
@@ -57,7 +53,7 @@ class News(db.Model, ImageFunctions):
     title = db.Column(db.String(256))
     text = db.Column(db.Text)
     date = db.Column(db.Date)
-    link = db.Column(db.String(4095))
+    link = db.Column(db.String(4096))
     author = db.Column(db.String(128))
 
 
@@ -71,3 +67,17 @@ class Event(db.Model, ImageFunctions):
     end_date = db.Column(db.Date)
     address = db.Column(db.String(256))
     link = db.Column(db.String(4096))
+
+
+class Text(db.Model):
+    id = db.Column(db.Integer, primary_key=True, index=True)
+    title = db.Column(db.String(256))
+    text = db.Column(db.Text)
+
+
+class AcademicPlan(db.Model, ImageFunctions):
+    PATH = 'app/static/images/academic_plan/'
+
+    id = db.Column(db.Integer, primary_key=True, index=True)
+    course = db.Column(db.Integer)
+    semester = db.Column(db.Integer)
