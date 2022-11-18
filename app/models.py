@@ -1,5 +1,6 @@
 import os
 from app import db
+from flask import url_for, Markup
 # from flask_login import UserMixin, login_required
 # from app import login, admin
 from flask_admin import BaseView, expose, AdminIndexView
@@ -40,14 +41,17 @@ class ImageFunctions:
     @property
     def img_url(self):
         """Возвращает url для изображения"""
-        path = os.path.join(self.PATH, f'{self.id}.jpg')
-        if os.path.isfile(path):
-            return f'{self.PATH[:3]}{self.id}.jpg'
-        return f'{self.PATH[:3]}0.jpg'  # стандартное фот
+        relative_path = os.path.join(self.PATH, f'{self.id}.jpg')
+        url_path = url_for('static', filename=relative_path)
+
+        if os.path.isfile(os.path.join(os.getcwd(), url_path[1:])):
+            return url_path
+
+        return url_for('static', filename=f'{self.PATH}0.jpg')  # стандартное фото
 
 
 class News(db.Model, ImageFunctions):
-    PATH = 'app/static/images/news/'
+    PATH = 'images/news/'
 
     id = db.Column(db.Integer, primary_key=True, index=True)
     title = db.Column(db.String(256))
@@ -58,7 +62,7 @@ class News(db.Model, ImageFunctions):
 
 
 class Event(db.Model, ImageFunctions):
-    PATH = 'app/static/images/events/'
+    PATH = 'images/events/'
 
     id = db.Column(db.Integer, primary_key=True, index=True)
     title = db.Column(db.String(256))
@@ -76,7 +80,7 @@ class Text(db.Model):
 
 
 class AcademicPlan(db.Model, ImageFunctions):
-    PATH = 'app/static/images/academic_plan/'
+    PATH = 'images/academic_plan/'
 
     id = db.Column(db.Integer, primary_key=True, index=True)
     course = db.Column(db.Integer)

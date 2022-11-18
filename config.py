@@ -11,4 +11,3 @@ class Config(object):
     LOG_TO_STDOUT = os.environ.get('LOG_TO_STDOUT')
     FLASK_ADMIN_SWATCH = 'LUX'
     BABEL_DEFAULT_LOCALE = 'ru'
-
