@@ -8,20 +8,27 @@ from app import db
 
 
 class TemplateResource(Resource):
-    MODEL: type[db.Model] = News  # какая-нибудь таблица из бд
+    MODEL = News  # какая-нибудь таблица из бд
     PARSER = reqparse.RequestParser()
 
     def get(self):
         self.PARSER.add_argument('id', type=int, required=True)
-        args = self.PARSER.parse_args()
-        id = args['id']
+
+        try:
+            args = self.PARSER.parse_args()
+            id = args['id']
+        except:
+            return make_response(
+                jsonify({'message': 'the `id` argument is not specified'}),
+                406
+            )
 
         row = self.MODEL.query.filter_by(id=id).first()
         return jsonify(row)
 
 
 class TemplateListResource(Resource):
-    MODEL: type[db.Model] = News  # какая-нибудь таблица из бд
+    MODEL = News  # какая-нибудь таблица из бд
     SORT_KEY: str = 'id'
     PAGE_SIZE: int = 10
 
@@ -31,9 +38,12 @@ class TemplateListResource(Resource):
     def get(self):
         try:
             self.parser.add_argument('page_number', type=int, default=1)
-            args = self.parser.parse_args()
-            page_number = args['page_number']
-            print(page_number)
+
+            try:
+                args = self.parser.parse_args()
+                page_number = args['page_number']
+            except:
+                page_number = 1
 
             rows = self.MODEL.query.order_by(
                 self.MODEL.__dict__[f'{self.SORT_KEY}']).limit(

@@ -15,12 +15,12 @@ from flask_cors import CORS
 
 db = SQLAlchemy()
 migrate = Migrate()
-# moment = Moment()
 json = FlaskJSON()
 ckeditor = CKEditor()
 babel_ex = BabelEx()
 cors = CORS()
-admin = Admin(name='Сайт Кафедры', template_mode='bootstrap4', url='/admin_panel')
+admin = Admin(name='Сайт Кафедры', template_mode='bootstrap4',
+              url='/admin_panel')
 
 
 def create_app(config_class=Config):
@@ -31,7 +31,6 @@ def create_app(config_class=Config):
     app.config.from_object(config_class)
     db.init_app(app)
     migrate.init_app(app, db, render_as_batch=True)
-    # moment.init_app(app)
     json.init_app(app)
     ckeditor.init_app(app)
     babel_ex.init_app(app)
@@ -50,24 +49,7 @@ def create_app(config_class=Config):
     from app.auth import bp as auth_bp
     app.register_blueprint(auth_bp, url_prefix='/auth')
 
-
     if not app.debug and not app.testing:
-        # if app.config['MAIL_SERVER']:
-        #     auth = None
-        #     if app.config['MAIL_USERNAME'] or app.config['MAIL_PASSWORD']:
-        #         auth = (app.config['MAIL_USERNAME'],
-        #                 app.config['MAIL_PASSWORD'])
-        #     secure = None
-        #     if app.config['MAIL_USE_TLS']:
-        #         secure = ()
-        #     mail_handler = SMTPHandler(
-        #         mailhost=(app.config['MAIL_SERVER'], app.config['MAIL_PORT']),
-        #         fromaddr='no-reply@' + app.config['MAIL_SERVER'],
-        #         toaddrs=app.config['ADMINS'], subject='NSPT Rating Failure',
-        #         credentials=auth, secure=secure)
-        #     mail_handler.setLevel(logging.ERROR)
-        #     app.logger.addHandler(mail_handler)
-
         if not os.path.exists('logs'):
             os.mkdir('logs')
         file_handler = RotatingFileHandler('logs/main.log',
@@ -85,4 +67,3 @@ def create_app(config_class=Config):
 
 
 from app import models
-# from app.admin_panel.routes import MyView
