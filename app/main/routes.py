@@ -1,10 +1,7 @@
-from flask import render_template, flash, redirect, url_for,\
-    request, jsonify, current_app
-from app.main import bp
+from app.main import api
+from app.main import resources
 
-
-
-@bp.route('/', methods=['GET'])
-@bp.route('/main', methods=['GET'])
-def main():
-    return render_template('about.html')
+api.add_resource(resources.NewsResource, '/news')
+api.add_resource(resources.NewsListResource, '/all_news')
+api.add_resource(resources.EventResource, '/event')
+api.add_resource(resources.EventListResource, '/events')

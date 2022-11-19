@@ -5,29 +5,26 @@ from flask import Flask
 from flask_json import FlaskJSON
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-
 # from flask_moment import Moment
 from config import Config
 # from flask_login import LoginManager, login_required
 from flask_ckeditor import CKEditor
 from flask_admin import Admin
 from flask_babelex import Babel as BabelEx
+from flask_cors import CORS
 
 db = SQLAlchemy()
 migrate = Migrate()
 # moment = Moment()
 json = FlaskJSON()
 ckeditor = CKEditor()
-# login = LoginManager()
 babel_ex = BabelEx()
+cors = CORS()
 admin = Admin(name='Сайт Кафедры', template_mode='bootstrap4', url='/admin_panel')
-# login.login_view = 'auth.login'
-# login.login_message = 'Пожалуйста, авторизуйтесь для доступа к данной странице.'
-# login.login_message_category = 'warning'
 
 
 def create_app(config_class=Config):
-    app = Flask(__name__, static_url_path='/app/static',
+    app = Flask(__name__, static_url_path='/static',
                 template_folder='templates',
                 static_folder='static')
 
@@ -37,9 +34,8 @@ def create_app(config_class=Config):
     # moment.init_app(app)
     json.init_app(app)
     ckeditor.init_app(app)
-    # login.init_app(app)
-    # admin.init_app(app)
     babel_ex.init_app(app)
+    cors.init_app(app)
     admin.init_app(app)
 
     from app.errors import bp as errors_bp
