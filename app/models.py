@@ -6,6 +6,10 @@ from flask import url_for
 
 
 class ImageFunctions:
+    ADDRESS_URL = 'http://185.87.50.137:8080'
+    PATH = None  # путь из папки static
+    id = None  # id записи
+
     def save_img(self, img):
         """Сохраняет изображение"""
         path = os.path.join(self.PATH, f'{self.id}.jpg')
@@ -31,6 +35,10 @@ class ImageFunctions:
             return url_path
         return url_for('static', filename=f'{self.PATH}0.jpg')
 
+    @property
+    def full_img_url(self):
+        return f'{self.ADDRESS_URL}{self.img_url}'
+
 
 @dataclass
 class News(db.Model, ImageFunctions):
@@ -50,6 +58,7 @@ class News(db.Model, ImageFunctions):
     link: str
     author: str
     img_url: str
+    full_img_url: str
 
 
 @dataclass
@@ -72,6 +81,7 @@ class Event(db.Model, ImageFunctions):
     address: str
     link: str
     img_url: str
+    full_img_url: str
 
 
 @dataclass
@@ -96,3 +106,5 @@ class AcademicPlan(db.Model, ImageFunctions):
     id: int
     course: int
     semester: int
+    img_url: str
+    full_img_url: str
