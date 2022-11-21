@@ -50,6 +50,8 @@ class TemplateListResource(Resource):
 
             rows = rows.limit(page_number * self.PAGE_SIZE)
 
+            print(page_number * self.PAGE_SIZE, (page_number - 1) * self.PAGE_SIZE)
+
             return jsonify(rows[(page_number - 1) * self.PAGE_SIZE:])
         except:
             return make_response(jsonify({'message': 'server error'}), 500)
