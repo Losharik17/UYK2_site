@@ -2,7 +2,7 @@ import os
 from flask_admin.contrib.sqla import ModelView
 from flask_admin import form
 from flask import Markup
-from app.models import News, Event, Text, AcademicPlan
+from app.models import News, Event, AcademicPlan
 from flask_ckeditor import CKEditorField
 from wtforms.fields.html5 import DateField
 
