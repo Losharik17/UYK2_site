@@ -68,8 +68,8 @@ class NewsView(ModelView):
         'img': _list_thumbnail
     }
 
-    create_template = 'admin/news.html'
-    edit_template = 'admin/news.html'
+    create_template = 'admin/news_create.html'
+    edit_template = 'admin/news_edit.html'
 
 
 class EventView(ModelView):
@@ -79,22 +79,24 @@ class EventView(ModelView):
         'text': 'Содержание',
         'start_date': 'Дата начала',
         'end_date': 'Дата окончания',
-        'address': 'Адресс',
+        'address': 'Адрес',
         'link': 'Ссылка',
         'img': 'Фото',
     }
 
     # поля формы создания и редактирования
-    form_columns = ('title', 'text', 'start_date', 'end_date', 'address', 'link', 'img_load')
+    form_columns = ('title', 'text', 'start_date', 'end_date', 'address',
+                    'link', 'img_load')
 
     # поля вывода
-    column_list = ('title', 'text', 'start_date', 'end_date', 'address', 'link', 'img')
+    column_list = ('title', 'text', 'start_date', 'end_date', 'address',
+                   'link', 'img')
 
-    column_editable_list = ('title', 'text', 'start_date', 'end_date', 'address')
+    column_editable_list = ('title', 'start_date', 'end_date', 'address')
     column_default_sort = ('start_date', True)
     column_descriptions = dict(link='Ссылка на сторонний ресурс')
-    column_filters = ['start_date']
-    column_searchable_list = ['title', 'address']
+    column_filters = ['start_date', 'end_date']
+    column_searchable_list = ['title']
 
     export_max_rows = 500
     export_types = ['csv']
@@ -116,8 +118,8 @@ class EventView(ModelView):
             'Фото',
             base_path=os.path.join(
                 file_path,
-                f'app/static/{News.PATH}'),
-            url_relative_path=News.PATH,
+                f'app/static/{Event.PATH}'),
+            url_relative_path=Event.PATH,
             namegen=name_gen_image,
             allowed_extensions=['jpg', 'bmp', 'gif'],
             max_size=(1200, 780, True),
@@ -131,8 +133,8 @@ class EventView(ModelView):
         'img': _list_thumbnail
     }
 
-    create_template = 'admin/events.html'
-    edit_template = 'admin/events.html'
+    create_template = 'admin/event_create.html'
+    edit_template = 'admin/event_edit.html'
 
 
 class TextView(ModelView):
@@ -148,7 +150,7 @@ class TextView(ModelView):
     # поля вывода
     column_list = ('title', 'text')
 
-    column_editable_list = ('title', 'text')
+    column_editable_list = ['title']
     column_filters = ['title']
     column_searchable_list = ['title']
 
@@ -160,8 +162,8 @@ class TextView(ModelView):
         'text': CKEditorField('Текст'),
     }
 
-    create_template = 'admin/texts.html'
-    edit_template = 'admin/texts.html'
+    create_template = 'admin/text_create.html'
+    edit_template = 'admin/text_edit.html'
 
 
 class PlanView(ModelView):
@@ -173,10 +175,10 @@ class PlanView(ModelView):
     }
 
     # поля формы создания и редактирования
-    form_columns = ('course','semester','img_load')
+    form_columns = ('course', 'semester', 'img_load')
 
     # поля вывода
-    column_list = ('course','semester','img')
+    column_list = ('course', 'semester', 'img')
     column_default_sort = ('course', True)
     column_filters = ['course', 'semester']
     column_searchable_list = ['course', 'semester']
@@ -190,8 +192,8 @@ class PlanView(ModelView):
             'Фото',
             base_path=os.path.join(
                 file_path,
-                f'app/static/{News.PATH}'),
-            url_relative_path=News.PATH,
+                f'app/static/{AcademicPlan.PATH}'),
+            url_relative_path=AcademicPlan.PATH,
             namegen=name_gen_image,
             allowed_extensions=['jpg', 'bmp', 'gif'],
             max_size=(1200, 780, True),
