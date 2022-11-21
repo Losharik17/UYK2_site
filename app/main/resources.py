@@ -4,7 +4,7 @@ from werkzeug.datastructures import FileStorage
 from flask import jsonify, make_response, current_app
 from flask_restful import Resource, reqparse
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from app.models import News, Event
+from app.models import News, Event, AcademicPlan
 from app import db
 
 
@@ -79,3 +79,9 @@ class EventListResource(TemplateListResource):
     FILTER_KEY = 'end_date'
     PAGE_SIZE = 8
     ONLY_ACTUAL = True
+
+
+class PlanListResource(TemplateListResource):
+    MODEL = AcademicPlan
+    SORT_KEY = 'id'
+    PAGE_SIZE = 12
