@@ -82,3 +82,14 @@ class AcademicPlan(db.Model, ImageFunctions):
     id: int = db.Column(db.Integer, primary_key=True, index=True)
     course: int = db.Column(db.Integer)
     semester: int = db.Column(db.Integer)
+
+
+@dataclass
+class Article(db.Model, ImageFunctions):
+    PATH = 'images/articles/'
+
+    id: int = db.Column(db.Integer, primary_key=True, index=True)
+    title: str = db.Column(db.String(256))
+    text: str = db.Column(db.Text)
+    author: str = db.Column(db.String(128))
+    link: str = db.Column(db.String(4096))

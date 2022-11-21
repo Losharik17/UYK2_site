@@ -181,8 +181,9 @@ class PlanView(ModelView):
     column_list = ('course', 'semester', 'img')
     column_default_sort = ('course', True)
     column_filters = ['course', 'semester']
-    column_searchable_list = ['course', 'semester']
+    column_searchable_list = ['course']
 
+    can_create = False
     export_max_rows = 500
     export_types = ['csv']
 
