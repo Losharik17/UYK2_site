@@ -2,7 +2,7 @@ import os
 from flask_admin.contrib.sqla import ModelView
 from flask_admin import form
 from flask import Markup
-from app.models import News
+from app.models import News, Event, Text, AcademicPlan
 from flask_ckeditor import CKEditorField
 from wtforms.fields.html5 import DateField
 
@@ -70,3 +70,140 @@ class NewsView(ModelView):
 
     create_template = 'admin/news.html'
     edit_template = 'admin/news.html'
+
+
+class EventView(ModelView):
+    column_labels = {
+        'id': 'ID',
+        'title': 'Заголовок',
+        'text': 'Содержание',
+        'start_date': 'Дата начала',
+        'end_date': 'Дата окончания',
+        'address': 'Адресс',
+        'link': 'Ссылка',
+        'img': 'Фото',
+    }
+
+    # поля формы создания и редактирования
+    form_columns = ('title', 'text', 'start_date', 'end_date', 'address', 'link', 'img_load')
+
+    # поля вывода
+    column_list = ('title', 'text', 'start_date', 'end_date', 'address', 'link', 'img')
+
+    column_editable_list = ('title', 'text', 'start_date', 'end_date', 'address')
+    column_default_sort = ('start_date', True)
+    column_descriptions = dict(link='Ссылка на сторонний ресурс')
+    column_filters = ['start_date']
+    column_searchable_list = ['title', 'address']
+
+    export_max_rows = 500
+    export_types = ['csv']
+    form_widget_args = {
+        'start_date': {
+            'style': 'max-width: 200px;'
+        },
+        'end_date': {
+            'style': 'max-width: 200px;'
+        },
+    }
+
+    # дополнительная настройка полей
+    form_extra_fields = {
+        'text': CKEditorField('Текст'),
+        'start_date': DateField('Дата'),
+        'end_date': DateField('Дата'),
+        "img_load": form.ImageUploadField(
+            'Фото',
+            base_path=os.path.join(
+                file_path,
+                f'app/static/{News.PATH}'),
+            url_relative_path=News.PATH,
+            namegen=name_gen_image,
+            allowed_extensions=['jpg', 'bmp', 'gif'],
+            max_size=(1200, 780, True),
+        )
+    }
+
+    def _list_thumbnail(self, context, model, name):
+        return Markup(f'<img src="{model.img_url}" width="100">')
+
+    column_formatters = {
+        'img': _list_thumbnail
+    }
+
+    create_template = 'admin/events.html'
+    edit_template = 'admin/events.html'
+
+
+class TextView(ModelView):
+    column_labels = {
+        'id': 'ID',
+        'title': 'Заголовок',
+        'text': 'Содержание',
+    }
+
+    # поля формы создания и редактирования
+    form_columns = ('title', 'text')
+
+    # поля вывода
+    column_list = ('title', 'text')
+
+    column_editable_list = ('title', 'text')
+    column_filters = ['title']
+    column_searchable_list = ['title']
+
+    export_max_rows = 500
+    export_types = ['csv']
+
+    # дополнительная настройка полей
+    form_extra_fields = {
+        'text': CKEditorField('Текст'),
+    }
+
+    create_template = 'admin/texts.html'
+    edit_template = 'admin/texts.html'
+
+
+class PlanView(ModelView):
+    column_labels = {
+        'id': 'ID',
+        'course': 'Курс',
+        'semester': 'Семестр',
+        'img': 'Фото',
+    }
+
+    # поля формы создания и редактирования
+    form_columns = ('course','semester','img_load')
+
+    # поля вывода
+    column_list = ('course','semester','img')
+    column_default_sort = ('course', True)
+    column_filters = ['course', 'semester']
+    column_searchable_list = ['course', 'semester']
+
+    export_max_rows = 500
+    export_types = ['csv']
+
+    # дополнительная настройка полей
+    form_extra_fields = {
+        "img_load": form.ImageUploadField(
+            'Фото',
+            base_path=os.path.join(
+                file_path,
+                f'app/static/{News.PATH}'),
+            url_relative_path=News.PATH,
+            namegen=name_gen_image,
+            allowed_extensions=['jpg', 'bmp', 'gif'],
+            max_size=(1200, 780, True),
+        )
+    }
+
+    def _list_thumbnail(self, context, model, name):
+        return Markup(f'<img src="{model.img_url}" width="100">')
+
+    column_formatters = {
+        'img': _list_thumbnail
+    }
+
+    create_template = 'admin/plan.html'
+    edit_template = 'admin/plan.html'
