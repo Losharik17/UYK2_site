@@ -1,11 +1,7 @@
-from os import getcwd
 import datetime as dt
-from werkzeug.datastructures import FileStorage
-from flask import jsonify, make_response, current_app
+from flask import jsonify, make_response
 from flask_restful import Resource, reqparse
-from flask_jwt_extended import jwt_required, get_jwt_identity
 from app.models import News, Event, AcademicPlan, Article
-from app import db
 
 
 class TemplateResource(Resource):
