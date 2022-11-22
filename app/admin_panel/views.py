@@ -2,7 +2,7 @@ import os
 from flask_admin.contrib.sqla import ModelView
 from flask_admin import form
 from flask import Markup
-from app.models import News, Event, AcademicPlan
+from app.models import News, Event, AcademicPlan, Article
 from flask_ckeditor import CKEditorField
 from wtforms.fields.html5 import DateField
 
@@ -210,3 +210,52 @@ class PlanView(ModelView):
 
     create_template = 'admin/plan.html'
     edit_template = 'admin/plan.html'
+
+
+class ArticleView(ModelView):
+    column_labels = {
+        'id': 'ID',
+        'title': 'Заголовок',
+        'text': 'Содержание',
+        'link': 'Ссылка',
+        'author': 'Автор',
+        'img': 'Фото',
+    }
+
+    # поля формы создания и редактирования
+    form_columns = ('title', 'text', 'author', 'link', 'img_load')
+
+    # поля вывода
+    column_list = ('title', 'text', 'author', 'link', 'img')
+
+    column_editable_list = ('title', 'author')
+    column_descriptions = dict(link='Ссылка на сторонний ресурс')
+    column_searchable_list = ['title', 'author']
+
+    export_max_rows = 500
+    export_types = ['csv']
+
+    # дополнительная настройка полей
+    form_extra_fields = {
+        'text': CKEditorField('Текст'),
+        "img_load": form.ImageUploadField(
+            'Фото',
+            base_path=os.path.join(
+                file_path,
+                f'app/static/{Article.PATH}'),
+            url_relative_path=Article.PATH,
+            namegen=name_gen_image,
+            allowed_extensions=['jpg', 'bmp', 'gif'],
+            max_size=(1200, 780, True),
+        )
+    }
+
+    def _list_thumbnail(self, context, model, name):
+        return Markup(f'<img src="{model.img_url}" width="100">')
+
+    column_formatters = {
+        'img': _list_thumbnail
+    }
+
+    create_template = 'admin/article_create.html'
+    edit_template = 'admin/article_edit.html'
