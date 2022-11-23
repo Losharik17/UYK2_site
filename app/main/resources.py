@@ -47,10 +47,7 @@ class TemplateListResource(Resource):
                                    >= dt.datetime.now())
             if self.SORT_KEY:
                 rows = rows.order_by(self.MODEL.__dict__[f'{self.SORT_KEY}'])
-
-            rows = rows.limit(page_number * self.PAGE_SIZE)
-
-            print(page_number * self.PAGE_SIZE, (page_number - 1) * self.PAGE_SIZE)
+            rows = rows.limit(self.PAGE_SIZE)
 
             return jsonify(rows[(page_number - 1) * self.PAGE_SIZE:])
         except:
