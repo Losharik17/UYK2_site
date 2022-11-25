@@ -169,19 +169,19 @@ class TextView(ModelView):
 class PlanView(ModelView):
     column_labels = {
         'id': 'ID',
-        'course': 'Курс',
+        'course_id': 'Курс',
         'semester': 'Семестр',
         'img': 'Фото',
     }
 
     # поля формы создания и редактирования
-    form_columns = ('course', 'semester', 'img_load')
+    form_columns = ('course_id', 'semester', 'img_load')
 
     # поля вывода
-    column_list = ('course', 'semester', 'img')
-    column_default_sort = ('course', True)
-    column_filters = ['course', 'semester']
-    column_searchable_list = ['course']
+    column_list = ('course_id', 'semester', 'img')
+    column_default_sort = ('course_id', False)
+    column_filters = ['course_id', 'semester']
+    column_searchable_list = ['course_id']
 
     can_create = False
     export_max_rows = 500
@@ -199,6 +199,15 @@ class PlanView(ModelView):
             allowed_extensions=['jpg', 'bmp', 'gif'],
             max_size=(1200, 780, True),
         )
+    }
+
+    form_widget_args = {
+        'course_id': {
+            'readonly': True
+        },
+        'semester': {
+            'readonly': True
+        },
     }
 
     def _list_thumbnail(self, context, model, name):

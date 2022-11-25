@@ -70,17 +70,34 @@ class Event(db.Model, ImageFunctions):
 @dataclass
 class Text(db.Model):
     id: int = db.Column(db.Integer, primary_key=True, index=True)
+    invisible_title: str = db.Column(db.String(256))
     title: str = db.Column(db.String(256))
     text: str = db.Column(db.Text)
+
+
+@dataclass
+class Course(db.Model):
+    plans: list
+
+    course_number: int = db.Column(db.Integer)
+    id = db.Column(db.Integer, primary_key=True, index=True)
+    academic_plans = db.relationship('AcademicPlan',
+                                     backref='course',
+                                     lazy='dynamic')
+
+    @property
+    def plans(self):
+        print(self.academic_plans.all())
+        return self.academic_plans.all()
 
 
 @dataclass
 class AcademicPlan(db.Model, ImageFunctions):
     PATH = 'images/academic_plans/'
 
-    id: int = db.Column(db.Integer, primary_key=True, index=True)
-    course: int = db.Column(db.Integer)
+    id = db.Column(db.Integer, primary_key=True, index=True)
     semester: int = db.Column(db.Integer)
+    course_id = db.Column(db.Integer, db.ForeignKey('course.id'))
 
 
 @dataclass

@@ -1,7 +1,7 @@
 import datetime as dt
 from flask import jsonify, make_response
 from flask_restful import Resource, reqparse
-from app.models import News, Event, AcademicPlan, Article
+from app.models import News, Event, AcademicPlan, Article, Course
 
 
 class TemplateResource(Resource):
@@ -18,7 +18,6 @@ class TemplateResource(Resource):
             return make_response(
                 jsonify({'message': 'the `id` argument is not specified'}),
                 406)
-
         row = self.MODEL.query.filter_by(id=id).first()
         return jsonify(row)
 
@@ -32,26 +31,26 @@ class TemplateListResource(Resource):
     PARSER = reqparse.RequestParser()
 
     def get(self):
+        # try:
+        self.PARSER.add_argument('page_number', type=int,
+                                 default=1, location='args')
         try:
-            self.PARSER.add_argument('page_number', type=int,
-                                     default=1, location='args')
-            try:
-                args = self.PARSER.parse_args()
-                page_number = args['page_number']
-            except:
-                page_number = 1
-
-            rows = self.MODEL.query
-            if self.ONLY_ACTUAL:
-                rows = rows.filter(self.MODEL.__dict__[f'{self.FILTER_KEY}']
-                                   >= dt.datetime.now())
-            if self.SORT_KEY:
-                rows = rows.order_by(self.MODEL.__dict__[f'{self.SORT_KEY}'])
-            rows = rows.limit(self.PAGE_SIZE)
-
-            return jsonify(rows[(page_number - 1) * self.PAGE_SIZE:])
+            args = self.PARSER.parse_args()
+            page_number = args['page_number']
         except:
-            return make_response(jsonify({'message': 'server error'}), 500)
+            page_number = 1
+
+        rows = self.MODEL.query
+        if self.ONLY_ACTUAL:
+            rows = rows.filter(self.MODEL.__dict__[f'{self.FILTER_KEY}']
+                               >= dt.datetime.now())
+        if self.SORT_KEY:
+            rows = rows.order_by(self.MODEL.__dict__[f'{self.SORT_KEY}'])
+        rows = rows.limit(self.PAGE_SIZE)
+
+        return jsonify(rows[(page_number - 1) * self.PAGE_SIZE:])
+        # except:
+        #     return make_response(jsonify({'message': 'server error'}), 500)
 
 
 class NewsResource(TemplateResource):
@@ -77,9 +76,9 @@ class EventListResource(TemplateListResource):
 
 
 class PlanListResource(TemplateListResource):
-    MODEL = AcademicPlan
+    MODEL = Course
     SORT_KEY = 'id'
-    PAGE_SIZE = 12
+    PAGE_SIZE = 6
 
 
 class ArticleListResource(TemplateListResource):
