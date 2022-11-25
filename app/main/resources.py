@@ -31,26 +31,26 @@ class TemplateListResource(Resource):
     PARSER = reqparse.RequestParser()
 
     def get(self):
-        # try:
-        self.PARSER.add_argument('page_number', type=int,
-                                 default=1, location='args')
         try:
-            args = self.PARSER.parse_args()
-            page_number = args['page_number']
+            self.PARSER.add_argument('page_number', type=int,
+                                     default=1, location='args')
+            try:
+                args = self.PARSER.parse_args()
+                page_number = args['page_number']
+            except:
+                page_number = 1
+
+            rows = self.MODEL.query
+            if self.ONLY_ACTUAL:
+                rows = rows.filter(self.MODEL.__dict__[f'{self.FILTER_KEY}']
+                                   >= dt.datetime.now())
+            if self.SORT_KEY:
+                rows = rows.order_by(self.MODEL.__dict__[f'{self.SORT_KEY}'])
+            rows = rows.limit(self.PAGE_SIZE)
+
+            return jsonify(rows[(page_number - 1) * self.PAGE_SIZE:])
         except:
-            page_number = 1
-
-        rows = self.MODEL.query
-        if self.ONLY_ACTUAL:
-            rows = rows.filter(self.MODEL.__dict__[f'{self.FILTER_KEY}']
-                               >= dt.datetime.now())
-        if self.SORT_KEY:
-            rows = rows.order_by(self.MODEL.__dict__[f'{self.SORT_KEY}'])
-        rows = rows.limit(self.PAGE_SIZE)
-
-        return jsonify(rows[(page_number - 1) * self.PAGE_SIZE:])
-        # except:
-        #     return make_response(jsonify({'message': 'server error'}), 500)
+            return make_response(jsonify({'message': 'server error'}), 500)
 
 
 class NewsResource(TemplateResource):
