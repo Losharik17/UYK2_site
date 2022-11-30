@@ -69,10 +69,11 @@ class Event(db.Model, ImageFunctions):
 
 @dataclass
 class Text(db.Model):
-    id: int = db.Column(db.Integer, primary_key=True, index=True)
-    invisible_title: str = db.Column(db.String(256))
+    id = db.Column(db.Integer, primary_key=True, index=True)
+    invisible_title = db.Column(db.String(256))
     title: str = db.Column(db.String(256))
     text: str = db.Column(db.Text)
+
 
 
 @dataclass
