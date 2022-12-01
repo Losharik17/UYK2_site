@@ -1,0 +1,18 @@
+@import '../../../styles/config/config.scss';
+
+.footer {
+    width: 100%;
+    min-height: 190px;
+    background-color: $dark-gray;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.date {
+    height: 100%;
+    font-size: 2rem;
+    color: $bgColor;
+}

@@ -1,0 +1,43 @@
+@import '../../styles/config/config.scss';
+
+.latest-posts {
+    padding: 40px 0 0 0;
+    border-top: 3px solid rgba(116, 24, 48, 0.2);
+    & > :not(:last-child) {
+        margin: 0 0 40px 0;
+    }
+    &__title {}
+    &__list {
+    }
+    &__item {
+    }
+    &__list.skelet {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        height: 276px;
+        gap: 20px;
+    }
+}
+
+.latest-post {
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+    gap: 20px;
+    height: 100%;
+    &__image {
+        width: 100%;
+        height: 100%;
+    }
+    &__image img{
+        width: 100%;
+        height: 100%;
+        object-fit: fill;
+    }
+    &__title a{
+        font-weight: 600;
+        font-size: 1rem;
+        color: $primaryColor;
+    }
+}

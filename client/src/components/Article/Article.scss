@@ -1,0 +1,53 @@
+@import '../../styles/config/config.scss';
+
+.articles {
+    display: grid;
+    gap: 56px;
+    grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+}
+
+.article {
+    display: flex   ;
+    background-color: $white;
+    box-shadow: 5px 5px 5px rgba($color: #000000, $alpha: 0.1);
+    max-width: 500px;
+    padding: 20px;
+    line-height: 120%;
+    font-weight: 500;
+    color: $black;
+        &__content {
+            display: flex;
+            flex-flow: column;
+            width: 100%;
+            height: 100%;
+            gap: 13px;
+        }
+        &__title {
+            border-radius: 2px;
+            font-size: 1.25rem;
+            text-decoration-line: underline;
+        }
+        &__title a {
+            color: $black;
+        }
+        &__title.skeleton {
+            padding: 20px;
+        }
+        &__image {
+            border-radius: 3px;
+            overflow: hidden;
+            max-height: 266px;
+            height: 100%;
+        }
+        &__image.skeleton {
+            height: 266px;
+        }
+        &__image img{
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+        }
+        &__text {
+            font-size: 0.925rem;
+        }
+}

@@ -1,0 +1,88 @@
+@import './styles/reset.scss';
+@import './styles/fonts.scss';
+@import './styles/config//config.scss';
+@import './styles/swiper.scss';
+@import './styles/skeleton.scss';
+@import 'swiper/css';
+
+
+* {
+    scroll-behavior: smooth;
+}
+body {
+    overflow-x: hidden;
+    background: $bgColor;
+    color: $black;
+    font-family: $fontMontserrat;
+    font-weight: 400;
+    font-size: 1.5rem;
+    color: $black;
+    @media (max-width: 767px) {
+        & {
+            font-size: 1rem;
+        }
+    }
+}
+#root {
+    height: 100%;
+}
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+.wrapper-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    bottom: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $bgColor;
+    z-index: 1000;
+}
+h1 {
+    color: $black;
+    font-weight: 600;
+    font-size: 2rem;
+    line-height: 120%;
+}
+h2 {
+    color: $black;
+    font-weight: 600;
+    font-size: 1.2rem;
+    line-height: 120%;
+    @media (max-width: 767px) {
+        font-size: 0.8rem;
+    }
+}
+
+.container {
+    margin: 0px auto;
+    max-width: $maxWidth;
+    box-sizing: border-box;
+    padding: 0 15px;
+}
+
+.poster {
+    &__body {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        justify-content: space-between;
+        gap: 104px;
+    }
+    &__wrapper {
+        display: flex;
+        flex-flow: column;
+        height: 100%;
+    }
+    
+}
+.main {
+    padding: 65px 0;
+}

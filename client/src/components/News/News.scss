@@ -1,0 +1,83 @@
+@import '../../styles/config/config.scss';
+
+.news {
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+    height: 100%;
+    &__posts {
+        height: 100%;
+        display: flex;
+        flex-flow: column;
+        justify-content: space-between;
+        gap: 20px;
+    }
+    &__posts .btn {
+        align-self: flex-start;
+    }
+    &__list {
+        width: 100%;
+        display: grid;
+        justify-content: space-between;
+        grid-template-columns: repeat(auto-fit, minmax(100px, 130px));
+        grid-gap: 40px 20px;
+    }
+    @media (max-width: 767px) {
+        &__list {
+            align-items: center;
+            justify-content: center;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 170px));
+        }
+    }
+    @media (max-width: 410px) {
+        &__list {
+            align-items: center;
+            justify-content: center;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 120px));
+        }
+    }
+}
+.new {
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+        &__image {
+            max-width: 130px;
+            max-height: 130px;
+            width: 100%;
+            height: 100%;
+            height: 120px;
+            background-color: $white;
+        }
+        &__image img {
+            width: 100%;
+            height: 100%;
+            object-fit: fill;
+        }
+        &__title {
+            font-weight: 500;
+            font-size: 1rem;
+            line-height: 120%;
+            color: $black;
+        }
+        @media (max-width: 767px) {
+            &__image {
+            max-width: 170px;
+            max-height: 170px;
+            width: 100%;
+            height: 100%;
+            height: 170px;
+            }
+        }   
+        @media (max-width: 410px) {
+            &__image {
+                max-width: 120px;
+                max-height: 120px;
+                width: 100%;
+                height: 100%;
+                height: 120px;
+            }
+        }
+}

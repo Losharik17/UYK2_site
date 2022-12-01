@@ -1,0 +1,44 @@
+@import '../../styles/config/config.scss';
+
+.events {
+    &__posts {
+        display: flex;
+        flex-flow: column;
+        justify-content: space-between;
+        gap: 40px;
+    }
+    &__list {
+        display: grid;
+        gap: 20px;
+    }
+    &__posts .btn {
+        align-self: flex-end;
+    }
+    &__list > :not(:last-child) {
+        border-bottom: 3px solid rgba(116, 24, 48, 0.2);
+    }
+}
+
+.event {
+    & > div {
+        margin: 0 0 5px 0;
+    }
+    &__date {
+        color: $primaryColor;
+        font-size: 1rem;
+        white-space: nowrap;
+        padding: 5px 0;
+    }
+    &__title {
+        font-weight: 500;
+        font-size: 1.5rem;
+        color: $black;
+        line-height: 120%;
+    }
+    &__title:hover {
+        text-decoration: underline;
+    }
+    &__title.skeleton {
+        padding: 20px;
+    }
+}

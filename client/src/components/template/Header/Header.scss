@@ -1,0 +1,214 @@
+@import '../../../styles/config/config.scss';
+
+.logo {
+    height: 100%;
+    z-index: 3;
+    background-color: $primaryColor;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 20px;
+    gap: 10px;
+	line-height: 120%;
+		&__text {
+            white-space: nowrap;
+            display: grid;
+            color: $white;
+            font-weight: 700;
+        }
+		&__sub-title {
+            font-size: 0.8rem;
+			line-height: 100%;
+        }
+		&__title {        
+            font-size: 1rem;
+        }
+    @media (max-width: 767px) {
+        & {
+            padding: 5px 10px;
+        }
+    }
+}
+
+.header {
+	position: fixed;
+	width: 100%;
+	top: 0;
+	left: 0;
+	z-index: 100;
+	backdrop-filter: blur(2px);
+	&::before {
+		content: '';
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		z-index: 2;
+		transition: all 0.3s ease 0s;
+        border-top: 5px solid $primaryColor;
+	}
+    &.scroll::before {
+        background-color: rgba($color: #000000, $alpha: 0.2);
+    }
+		&__body {
+			z-index: 3;
+			display: flex;
+            align-items: center;
+            gap: 70px;
+		}
+		&__menu {
+            width: 100%;
+            z-index: 4;
+            transition: all 0.3s ease 0s;
+		}
+		&__burger {
+			margin-right: 10px;
+            display: none;
+			width: 50px;
+			height: 25px;
+			position: relative;
+			cursor: pointer;
+            z-index: 4;
+		}
+		&__burger::before, &__burger::after, &__burger span{
+			content: '';
+			max-width: 40px;
+			width: 100%;
+			height: 3px;
+			position: absolute;
+			transition: all 0.5s ease 0s;
+		}
+		&__burger span {
+			top: 11px;
+		}
+		&__burger::before {
+			bottom: 0;
+			right: 0;
+		}
+		&__burger::after {
+			top: 0;
+			right: 0;
+		}
+	@media (max-width: 767px) {
+		& > .container {
+			box-sizing: content-box;
+			padding: 0;
+		}
+        &::before {
+            box-shadow: 0 0 5px $white;
+        }
+        &__body {
+            justify-content: space-between;
+            gap: 0;
+        }
+		&__menu {
+            z-index: 1;
+			position: absolute;
+			right: 150%;
+			height: 100%;
+			width: 100%;
+			bottom: 0;
+		}
+        &__burger {
+            display: block;
+        }
+
+		&__burger span, &__burger::after, &__burger::before {
+			background-color: $primaryColor;
+		}
+		&__burger span {
+			right: 0;
+		}
+		&__burger.active::after, &__burger.active::before, &__burger.active span {
+			background-color: $bgColor;
+		}
+		&__burger::after, &__burger::before {
+			left: 0;
+		}
+		&__burger.active::before, &__burger.active::after {
+			left: 20%;
+		}
+		&__burger.active span {
+			right: 20%;
+		}
+		&__menu.active {
+			right: 0;
+		}
+
+	}
+}
+.menu {
+        &__body {
+            display: flex;
+            height: 100%;
+        }
+		&__list {
+            width: 100%;
+            height: 100%;
+			display: flex;
+            align-items: center;
+            white-space: nowrap;
+            justify-content: space-between;
+			grid-auto-flow: column;
+		}
+		&__list li {
+			position: relative;
+		}
+		&__link {
+			font-size: 1rem;
+			line-height: 120%;
+			letter-spacing: 0.03em;
+			color: $primaryColor;
+            font-weight: 600;
+			position: relative;
+		}
+        &__list &__link::before {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            opacity: 0;
+            background-color: $primaryColor;
+            transition: all 0.5s ease 0s;
+        }
+		&__link.active::before {
+			width: 100%;
+			opacity: 1;
+		}	
+        &__link:hover::before {
+            width: 100%;
+            opacity: 1;
+        }
+	@media (max-width: 767px) { 
+        &__body {
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+		&__list &__link::before {
+            background-color: $white;
+        }
+		&__list {
+			flex-flow: column;
+			gap: 30px;
+			padding-bottom: 100px;
+		}
+		&__link {
+            color: $white;
+			font-size: 30px;
+		}
+		&__body {
+            width: 100%;
+            height: 100%;
+            position: sticky;
+            background-color: $primaryColor;
+            padding: 40% 0 80% 0;
+			box-shadow: 0 0 20px $primaryColor;
+		}
+	}
+}

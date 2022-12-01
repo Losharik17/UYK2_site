@@ -1,0 +1,19 @@
+@import '../../styles/config/config.scss';
+
+.btn {
+    display: inline-block;
+    cursor: pointer;
+    font-size: 1.25rem;
+    line-height: 120%;
+    background-color: $primaryColor;
+    color: $white;
+    padding: 20px 30px;
+    border-radius: 3px;
+    transition: all 0.5s ease 0s;
+    &:hover {
+        background-color: rgba($color: $primaryColor, $alpha: 0.6);
+    }
+    &:disabled {
+        background-color: rgba($color: $primaryColor, $alpha: 0.6);
+    }
+}
